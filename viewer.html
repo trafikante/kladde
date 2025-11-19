@@ -38,7 +38,7 @@ async function loadAndTransform() {
     }
 
     // XSL laden
-    const xslResponse = await fetch("xslt/tei2html.xsl");
+    const xslResponse = await fetch("xslt/tei2html.xsl?v=2");
     const xslText = await xslResponse.text();
     const parser = new DOMParser();
     const xsl = parser.parseFromString(xslText, "text/xml");
@@ -90,3 +90,4 @@ window.onload = loadAndTransform;
 
 </body>
 </html>
+
