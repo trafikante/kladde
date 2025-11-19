@@ -15,7 +15,8 @@
         <title>
           <xsl:value-of select="//tei:titleStmt/tei:title"/>
         </title>
-        <link rel="stylesheet" href="css/styles.css"/>
+        <link rel="stylesheet" href="css/styles.css?v=2"/>
+
       </head>
       <body>
 
@@ -129,3 +130,4 @@
   </xsl:template>
 
 </xsl:stylesheet>
+
