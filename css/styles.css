@@ -1,24 +1,76 @@
+/* Grundlayout */
+body {
+  font-family: Georgia, "Times New Roman", serif;
+  margin: 1.5rem;
+  line-height: 1.5;
+}
+
+h1 {
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+}
+
+/* Container für Bild + Text */
 .page-container {
   display: flex;
-  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: flex-start;
 }
 
-.image-column {
-  width: 50%;
-  padding: 10px;
-}
-
+/* Spalten */
+.image-column,
 .text-column {
-  width: 50%;
-  padding: 10px;
-  font-family: serif;
+  flex: 1 1 320px;   /* wächst, schrumpft, Mindestbreite ca. 320px */
+  min-width: 0;
 }
 
+/* Bild responsiv */
+.image-column img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid #ccc;
+}
+
+/* Textspalte */
+.text-column {
+  font-size: 1rem;
+}
+
+/* Datumszeile */
+.dateline {
+  font-style: italic;
+  margin-bottom: 0.5rem;
+}
+
+/* Inline-Stile für Entitäten */
+.underline {
+  text-decoration: underline;
+}
+
+.person {
+  color: #003399;
+  font-weight: 500;
+}
+
+.place {
+  color: #006633;
+}
+
+.event {
+  color: #990000;
+}
+
+/* Fußnoten inline (für diese kleine Edition) */
 .footnote {
-  font-size: 0.8em;
+  font-size: 0.85rem;
   color: #444;
 }
 
-.person { color: #003399; }
-.place { color: #006633; }
-.event { color: #990000; }
+/* Responsiv: auf sehr kleinen Screens einspaltig */
+@media (max-width: 768px) {
+  .page-container {
+    flex-direction: column;
+  }
+}
