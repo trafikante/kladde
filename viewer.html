@@ -28,7 +28,7 @@ function getParameterByName(name) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
-window.onload = async function() {
+async function loadAndTransform() {
 
     const teiFile = getParameterByName("doc");
     if (!teiFile) {
@@ -53,8 +53,29 @@ window.onload = async function() {
     xsltProcessor.importStylesheet(xsl);
     const result = xsltProcessor.transformToFragment(tei, document);
 
-    document.getElementById("output").appendChild(result);
-};
+    const out = document.getElementById("output");
+    out.innerHTML = "";
+    out.appendChild(result);
+
+    // Standardansicht: Lesefassung
+    showView("reading");
+}
+
+function showView(mode) {
+    const crit = document.querySelector("#output #critical-view");
+    const read = document.querySelector("#output #reading-view");
+    if (!crit || !read) return;
+
+    if (mode === "critical") {
+        crit.style.display = "block";
+        read.style.display = "none";
+    } else {
+        crit.style.display = "none";
+        read.style.display = "block";
+    }
+}
+
+window.onload = loadAndTransform;
 </script>
 
 </head>
@@ -62,10 +83,6 @@ window.onload = async function() {
 <body>
 
 <h1>Digitale Arbeitskladde – TEI Live Viewer</h1>
-
-<p>
-    Dieses Interface lädt und transformiert TEI-Daten direkt im Browser.
-</p>
 
 <div id="output">
     <!-- Ergebnis erscheint hier -->
