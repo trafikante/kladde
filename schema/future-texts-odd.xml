@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0"
+     xmlns:tei="http://www.tei-c.org/ns/1.0"
+     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+     xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>ODD für die digitale Edition „Future Texts – Arbeitskladde“</title>
+        <author>ChatGPT im Auftrag von Tobias Kraft</author>
+      </titleStmt>
+      <publicationStmt>
+        <p>Zur Veröffentlichung im GitHub-Repository der Edition.</p>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Automatisch generierte TEI-ODD-Spezifikation basierend auf der TEI-Datei von Seite 139.</p>
+      </sourceDesc>
+    </fileDesc>
+    <encodingDesc>
+      <schemaRef n="TEI P5" url="https://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng"/>
+    </encodingDesc>
+  </teiHeader>
+
+  <text>
+    <body>
+
+      <!-- ******************************************************************* -->
+      <!--                      SPEZIFIKATION / ODD                            -->
+      <!-- ******************************************************************* -->
+
+      <schemaSpec ident="future-texts-schema"
+                  xmlns="http://www.tei-c.org/ns/1.0">
+
+        <!-- Basis-Module aktivieren -->
+        <moduleRef key="core"/>
+        <moduleRef key="textstructure"/>
+        <moduleRef key="msdescription"/>
+        <moduleRef key="header"/>
+        <moduleRef key="linking"/>
+        <moduleRef key="namesdates"/>
+        <moduleRef key="transcr"/>
+        <moduleRef key="analysis"/>
+
+        <!-- *************************************************************** -->
+        <!--                      ELEMENTE DEFINIEREN                        -->
+        <!-- *************************************************************** -->
+
+        <!-- Schreibakt-DIV -->
+        <elementSpec ident="div" mode="change">
+          <classes>
+            <memberOf key="att.typed"/>
+          </classes>
+          <attList>
+            <attDef ident="type">
+              <valList type="closed">
+                <valItem ident="entry"/>
+              </valList>
+            </attDef>
+          </attList>
+        </elementSpec>
+
+        <!-- pb mit xml:id verpflichtend -->
+        <elementSpec ident="pb" mode="change">
+          <attList>
+            <attDef ident="xml:id">
+              <datatype>
+                <dataRef name="ID"/>
+              </datatype>
+              <desc>Eindeutige ID pro Seite</desc>
+            </attDef>
+          </attList>
+        </elementSpec>
+
+        <!-- hi (nur underline erlaubt) -->
+        <elementSpec ident="hi" mode="change">
+          <attList>
+            <attDef ident="rend">
+              <valList type="closed">
+                <valItem ident="underline"/>
+              </valList>
+            </attDef>
+          </attList>
+        </elementSpec>
+
+        <!-- event + name type="conference" -->
+        <elementSpec ident="event" mode="change">
+          <attList>
+            <attDef ident="type">
+              <valList type="closed">
+                <valItem ident="conference"/>
+              </valList>
+            </attDef>
+          </attList>
+        </elementSpec>
+
+        <elementSpec ident="name" mode="change">
+          <attList>
+            <attDef ident="type">
+              <valList type="closed">
+                <valItem ident="conference"/>
+              </valList>
+            </attDef>
+          </attList>
+        </elementSpec>
+
+        <!-- Normierte Personen -->
+        <elementSpec ident="persName" mode="change">
+          <attList>
+            <attDef ident="ref"/>
+            <attDef ident="key"/>
+          </attList>
+        </elementSpec>
+
+        <!-- Orte -->
+        <elementSpec ident="placeName" mode="change">
+          <attList>
+            <attDef ident="ref"/>
+            <attDef ident="key"/>
+          </attList>
+        </elementSpec>
+
+        <!-- dateline (with @when) -->
+        <elementSpec ident="dateline" mode="change">
+          <attList>
+            <attDef ident="when"/>
+          </attList>
+        </elementSpec>
+
+        <!-- fw unverändert erlaubt -->
+        <elementSpec ident="fw" mode="change"/>
+
+        <!-- notes (nur place="foot") -->
+        <elementSpec ident="note" mode="change">
+          <attList>
+            <attDef ident="place">
+              <valList type="closed">
+                <valItem ident="foot"/>
+              </valList>
+            </attDef>
+          </attList>
+        </elementSpec>
+
+      </schemaSpec>
+    </body>
+  </text>
+</TEI>

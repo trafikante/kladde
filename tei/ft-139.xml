@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Future Texts – Arbeitskladde, Manuskriptseite 139</title>
+        <respStmt>
+          <resp>Transkription</resp>
+          <name>Tobias Kraft</name>
+        </respStmt>
+        <respStmt>
+          <resp>TEI-Encoding</resp>
+          <name>ChatGPT</name>
+        </respStmt>
+      </titleStmt>
+
+      <publicationStmt>
+        <publisher>Unveröffentlichtes Manuskript – private Arbeitskladde</publisher>
+        <availability status="restricted">
+          <p>Nutzung nur im Rahmen der wissenschaftlichen Edition.</p>
+        </availability>
+      </publicationStmt>
+
+      <sourceDesc>
+        <msDesc>
+          <msIdentifier>
+            <repository>Privatbesitz</repository>
+            <idno>Future Texts</idno>
+          </msIdentifier>
+
+          <msContents>
+            <summary>Arbeitskladde mit Notizen zum Projekt „Future Texts“.</summary>
+          </msContents>
+
+          <physDesc>
+            <objectDesc>
+              <supportDesc>
+                <support>Papier, Spiralbindung.</support>
+                <extent>156 Seiten.</extent>
+              </supportDesc>
+            </objectDesc>
+          </physDesc>
+
+          <history>
+            <origin>
+              <origDate notBefore="2021-10-01" notAfter="2025-12-31">
+                Ende 2021 bis Ende 2025
+              </origDate>
+            </origin>
+          </history>
+
+          <additional>
+            <adminInfo>
+              <recordHist>
+                <source>Digitalisat (JPG) der Seite 139: TK-Kladde-139.jpeg</source>
+              </recordHist>
+            </adminInfo>
+          </additional>
+        </msDesc>
+      </sourceDesc>
+    </fileDesc>
+
+    <profileDesc>
+      <langUsage>
+        <language ident="de">Deutsch</language>
+      </langUsage>
+    </profileDesc>
+
+    <encodingDesc>
+      <refsDecl>
+
+        <listPerson>
+          <person xml:id="pers-lenz" ref="https://d-nb.info/gnd/1063751594">
+            <persName>Markus Alexander Lenz</persName>
+          </person>
+        </listPerson>
+
+        <listPlace>
+          <place xml:id="place-saarbruecken" ref="https://www.geonames.org/2842647/saarbruecken.html">
+            <placeName>Saarbrücken</placeName>
+          </place>
+        </listPlace>
+
+        <listEvent>
+          <event xml:id="ev-artHerm">
+            <title>Tagung „Artifizielle Hermeneutik“</title>
+            <idno type="url">https://www.uni-saarland.de/aktuell/tagung-artifizielle-hermeneutik-kontingenz-sinn-digitalitaet-40658.html</idno>
+          </event>
+        </listEvent>
+
+      </refsDecl>
+    </encodingDesc>
+  </teiHeader>
+
+  <text>
+    <body>
+      <div type="entry" xml:id="ft-139">
+
+        <pb n="139" xml:id="pb-139"/>
+
+        <dateline when="2025-11-19">
+          19.
+          <choice>
+            <abbr>Nov</abbr>
+            <expan>November</expan>
+          </choice>
+          2025
+        </dateline>
+
+        <p>
+          <lb/>Heute beginnt die <event type="conference" ref="#ev-artHerm">Tagung</event>
+          <note place="foot" target="#ev-artHerm">
+            Wissenschaftliche Veranstaltung zum Themenfeld algorithmischer und digitaler Hermeneutik,
+            ausgerichtet an der Universität des Saarlandes.
+            Weitere Informationen unter:
+            https://www.uni-saarland.de/aktuell/tagung-artifizielle-hermeneutik-kontingenz-sinn-digitalitaet-40658.html
+          </note>,
+          zu der mich
+          <lb/><persName key="markus" ref="#pers-lenz">Markus</persName>
+          <note place="foot" target="#pers-lenz">
+            Markus Alexander Lenz (GND 1063751594), Romanist und Komparatist.
+            Zusammenarbeit des Verfassers und Lenz im BMBF-Forschungsprojekt
+            „Alexander von Humboldts Amerikanische Reisetagebücher“
+            (Teilprojekt: „Genealogie, Chronologie, Epistemologie“) im Jahr 2014.
+            Projektseite: https://www.uni-potsdam.de/de/humboldtart/
+          </note>
+          eingeladen hat: „<name type="conference" ref="#ev-artHerm">Artifizielle
+          <lb/>Hermeneutik</name>“. <hi rend="underline">Super</hi> Thema. Und
+          <lb/>endlich <placeName key="saarbruecken" ref="#place-saarbruecken">Saarbrücken</placeName>
+          <note place="foot" target="#place-saarbruecken">
+            Saarbrücken (GeoNames 2842647), Sitz der Universität des Saarlandes,
+            an der die genannte Tagung stattfindet.
+          </note>
+          kennenlernen!
+        </p>
+
+        <fw type="folio" place="bottom-right">139</fw>
+
+      </div>
+    </body>
+  </text>
+</TEI>

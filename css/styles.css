@@ -1,0 +1,24 @@
+.page-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.image-column {
+  width: 50%;
+  padding: 10px;
+}
+
+.text-column {
+  width: 50%;
+  padding: 10px;
+  font-family: serif;
+}
+
+.footnote {
+  font-size: 0.8em;
+  color: #444;
+}
+
+.person { color: #003399; }
+.place { color: #006633; }
+.event { color: #990000; }

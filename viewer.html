@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>TEI Live Viewer</title>
+
+<style>
+  body {
+    font-family: Georgia, serif;
+    margin: 20px;
+  }
+
+  #output {
+    border: 1px solid #ccc;
+    padding: 20px;
+  }
+</style>
+
+<script>
+// Holt einen Parameter aus der URL, z.B. ?doc=tei/ft-139.xml
+function getParameterByName(name) {
+    const url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    const regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)");
+    const results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return "";
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+window.onload = async function() {
+
+    const teiFile = getParameterByName("doc");
+    if (!teiFile) {
+        document.getElementById("output").innerHTML =
+          "<p><b>Fehler:</b> Kein TEI-Dokument über ?doc= angegeben.</p>";
+        return;
+    }
+
+    // XSL laden
+    const xslResponse = await fetch("xslt/tei2html.xsl");
+    const xslText = await xslResponse.text();
+    const parser = new DOMParser();
+    const xsl = parser.parseFromString(xslText, "text/xml");
+
+    // TEI laden
+    const teiResponse = await fetch(teiFile);
+    const teiText = await teiResponse.text();
+    const tei = parser.parseFromString(teiText, "text/xml");
+
+    // Transformation im Browser
+    const xsltProcessor = new XSLTProcessor();
+    xsltProcessor.importStylesheet(xsl);
+    const result = xsltProcessor.transformToFragment(tei, document);
+
+    document.getElementById("output").appendChild(result);
+};
+</script>
+
+</head>
+
+<body>
+
+<h1>Digitale Arbeitskladde – TEI Live Viewer</h1>
+
+<p>
+    Dieses Interface lädt und transformiert TEI-Daten direkt im Browser.
+</p>
+
+<div id="output">
+    <!-- Ergebnis erscheint hier -->
+</div>
+
+</body>
+</html>
