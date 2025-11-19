@@ -1,11 +1,13 @@
 ---
 layout: default
-title: "Startseite"
+title: "Future Texts – Digitale Arbeitskladde"
 ---
 
 # Future Texts – Digitale Arbeitskladde
 
-Willkommen zur digitalen Edition.  
-Die Seiten können hier eingesehen werden:
+Dies ist ein Prototyp der digitalen Edition einer privaten Arbeitskladde
+zum Projekt „Future Texts“ (2021–2025).
 
-- [Seite 139](tei/ft-139.xml)
+👉 **Direkter Einstieg in die Edition der Seite 139:**
+
+[Seite 139 – Live-Ansicht](viewer.html?doc=tei/ft-139.xml)
