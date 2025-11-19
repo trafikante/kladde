@@ -48,6 +48,7 @@
             <div class="view-toggle">
               <button type="button" onclick="showView('critical')">kritischer Text</button>
               <button type="button" onclick="showView('reading')">Lesefassung</button>
+              <button type="button" onclick="showView('meta')">Metadaten</button>
             </div>
 
             <!-- Kritische Ansicht: Abkürzungen + Zeilenumbrüche + Fußnoten -->
@@ -55,21 +56,17 @@
               <xsl:apply-templates select="//tei:body" mode="crit"/>
 
               <!-- Fußnotenblock -->
-              <div class="footnotes-block">
-                <h2>Kommentar</h2>
-                <ol>
-                  <xsl:for-each select="//tei:note">
-                    <li>
-                      <span class="fn-number">
-                        <xsl:number level="any" count="tei:note"/>.
-                      </span>
-                      <xsl:text> </xsl:text>
-                      <xsl:apply-templates select="." mode="foot"/>
-                    </li>
-                  </xsl:for-each>
-                </ol>
-              </div>
+            <div class="footnotes-block">
+              <h2>Kommentar</h2>
+              <ol>
+                <xsl:for-each select="//tei:note">
+                  <li>
+                    <xsl:apply-templates select="." mode="foot"/>
+                  </li>
+                </xsl:for-each>
+              </ol>
             </div>
+
 
             <!-- Lesefassung: nur expan, Zeilenumbrüche aufgelöst -->
             <div id="reading-view" class="text-view">
@@ -78,6 +75,64 @@
 
           </div>
         </div>
+
+        <!-- Metadaten-Ansicht -->
+        <div id="meta-view" class="text-view">
+          <h2>Metadaten</h2>
+          <dl class="meta-list">
+            <dt>Titel</dt>
+            <dd>
+              <xsl:value-of select="//tei:titleStmt/tei:title"/>
+            </dd>
+
+            <dt>Verantwortlichkeiten</dt>
+            <dd>
+              <xsl:for-each select="//tei:titleStmt/tei:respStmt">
+                <span class="meta-role">
+                  <xsl:value-of select="tei:resp"/>:
+                  <xsl:text> </xsl:text>
+                  <xsl:value-of select="tei:name"/>
+                </span>
+                <xsl:if test="position() != last()">
+                  <br/>
+                </xsl:if>
+              </xsl:for-each>
+            </dd>
+
+            <dt>Aufbewahrungsort</dt>
+            <dd>
+              <xsl:value-of select="//tei:msIdentifier/tei:repository"/>
+              <xsl:text>; Signatur: </xsl:text>
+              <xsl:value-of select="//tei:msIdentifier/tei:idno"/>
+            </dd>
+
+            <dt>Umfang</dt>
+            <dd>
+              <xsl:value-of select="//tei:extent"/>
+            </dd>
+
+            <dt>Material</dt>
+            <dd>
+              <xsl:value-of select="//tei:support"/>
+            </dd>
+
+            <dt>Entstehungszeitraum</dt>
+            <dd>
+              <xsl:value-of select="normalize-space(//tei:origin/tei:origDate)"/>
+            </dd>
+
+            <dt>Sprache</dt>
+            <dd>
+              <xsl:value-of select="//tei:langUsage/tei:language"/>
+            </dd>
+
+            <dt>Digitalisat</dt>
+            <dd>
+              <xsl:value-of select="//tei:recordHist/tei:source"/>
+            </dd>
+          </dl>
+        </div>
+
 
         <!-- Entitäten-Legende -->
         <div class="entity-legend">
@@ -340,16 +395,43 @@
   <!--           MODUS: FUSSNOTENINHALT (mode="foot")            -->
   <!-- ========================================================= -->
 
-  <xsl:template match="tei:note" mode="foot">
-    <xsl:apply-templates mode="foot"/>
-  </xsl:template>
+<xsl:template match="text()[contains(., 'http')]" mode="foot">
+  <xsl:variable name="t" select="."/>
+  <xsl:variable name="before" select="substring-before($t, 'http')"/>
+  <xsl:variable name="urlAndAfter" select="substring-after($t, 'http')"/>
 
-  <xsl:template match="*" mode="foot">
-    <xsl:apply-templates mode="foot"/>
-  </xsl:template>
+  <!-- URL bis zum nächsten Leerzeichen oder bis zum Ende -->
+  <xsl:variable name="urlCore">
+    <xsl:choose>
+      <xsl:when test="contains($urlAndAfter, ' ')">
+        <xsl:value-of select="concat('http', substring-before($urlAndAfter, ' '))"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="concat('http', $urlAndAfter)"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
 
-  <xsl:template match="text()" mode="foot">
-    <xsl:value-of select="."/>
-  </xsl:template>
+  <xsl:variable name="after">
+    <xsl:choose>
+      <xsl:when test="contains($urlAndAfter, ' ')">
+        <xsl:value-of select="substring-after($urlAndAfter, ' ')"/>
+      </xsl:when>
+      <xsl:otherwise/>
+    </xsl:choose>
+  </xsl:variable>
+
+  <xsl:value-of select="$before"/>
+  <a href="{$urlCore}">
+    <xsl:value-of select="$urlCore"/>
+  </a>
+  <xsl:value-of select="$after"/>
+</xsl:template>
+
+<!-- danach das generische text()-Template -->
+<xsl:template match="text()" mode="foot">
+  <xsl:value-of select="."/>
+</xsl:template>
+
 
 </xsl:stylesheet>

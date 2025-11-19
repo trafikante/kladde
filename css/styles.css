@@ -74,3 +74,38 @@ h1 {
     flex-direction: column;
   }
 }
+
+/*zuletzt ergänzt für Kommentarbox und Metadaten */
+
+.footnotes-block {
+  margin-top: 1.5rem;
+  border: 1px solid #ddd;
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;      /* kleiner als Haupttext (1rem) */
+  background-color: #f7f7f7;
+  border-radius: 6px;
+}
+
+.footnotes-block h2 {
+  font-size: 1rem;         /* ebenfalls kleiner als h1 */
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.meta-list {
+  font-size: 0.95rem;
+}
+
+.meta-list dt {
+  font-weight: bold;
+  margin-top: 0.4rem;
+}
+
+.meta-list dd {
+  margin-left: 0;
+  margin-bottom: 0.2rem;
+}
+
+.meta-role {
+  white-space: nowrap;
+}
