@@ -64,24 +64,16 @@ async function loadAndTransform() {
 function showView(mode) {
     const crit = document.querySelector("#output #critical-view");
     const read = document.querySelector("#output #reading-view");
-    const meta = document.querySelector("#output #meta-view");
-    if (!crit || !read || !meta) return;
+    if (!crit || !read) return;
 
     if (mode === "critical") {
         crit.style.display = "block";
         read.style.display = "none";
-        meta.style.display = "none";
-    } else if (mode === "meta") {
-        crit.style.display = "none";
-        read.style.display = "none";
-        meta.style.display = "block";
-    } else { // reading (Standard)
+    } else {
         crit.style.display = "none";
         read.style.display = "block";
-        meta.style.display = "none";
     }
 }
-
 
 window.onload = loadAndTransform;
 </script>

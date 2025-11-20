@@ -76,63 +76,7 @@
           </div>
         </div>
 
-        <!-- Metadaten-Ansicht -->
-        <div id="meta-view" class="text-view">
-          <h2>Metadaten</h2>
-          <dl class="meta-list">
-            <dt>Titel</dt>
-            <dd>
-              <xsl:value-of select="//tei:titleStmt/tei:title"/>
-            </dd>
-
-            <dt>Verantwortlichkeiten</dt>
-            <dd>
-              <xsl:for-each select="//tei:titleStmt/tei:respStmt">
-                <span class="meta-role">
-                  <xsl:value-of select="tei:resp"/>:
-                  <xsl:text> </xsl:text>
-                  <xsl:value-of select="tei:name"/>
-                </span>
-                <xsl:if test="position() != last()">
-                  <br/>
-                </xsl:if>
-              </xsl:for-each>
-            </dd>
-
-            <dt>Aufbewahrungsort</dt>
-            <dd>
-              <xsl:value-of select="//tei:msIdentifier/tei:repository"/>
-              <xsl:text>; Signatur: </xsl:text>
-              <xsl:value-of select="//tei:msIdentifier/tei:idno"/>
-            </dd>
-
-            <dt>Umfang</dt>
-            <dd>
-              <xsl:value-of select="//tei:extent"/>
-            </dd>
-
-            <dt>Material</dt>
-            <dd>
-              <xsl:value-of select="//tei:support"/>
-            </dd>
-
-            <dt>Entstehungszeitraum</dt>
-            <dd>
-              <xsl:value-of select="normalize-space(//tei:origin/tei:origDate)"/>
-            </dd>
-
-            <dt>Sprache</dt>
-            <dd>
-              <xsl:value-of select="//tei:langUsage/tei:language"/>
-            </dd>
-
-            <dt>Digitalisat</dt>
-            <dd>
-              <xsl:value-of select="//tei:recordHist/tei:source"/>
-            </dd>
-          </dl>
-        </div>
-
+        
 
         <!-- Entitäten-Legende -->
         <div class="entity-legend">

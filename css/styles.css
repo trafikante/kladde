@@ -75,7 +75,6 @@ h1 {
   }
 }
 
-/*zuletzt ergänzt für Kommentarbox und Metadaten */
 
 .footnotes-block {
   margin-top: 1.5rem;
@@ -92,20 +91,3 @@ h1 {
   margin-bottom: 0.5rem;
 }
 
-.meta-list {
-  font-size: 0.95rem;
-}
-
-.meta-list dt {
-  font-weight: bold;
-  margin-top: 0.4rem;
-}
-
-.meta-list dd {
-  margin-left: 0;
-  margin-bottom: 0.2rem;
-}
-
-.meta-role {
-  white-space: nowrap;
-}
