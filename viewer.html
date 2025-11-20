@@ -1,94 +1,88 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<title>TEI Live Viewer</title>
+  <meta charset="UTF-8">
+  <title>Digitale Arbeitskladde – Saarbrückener Ausgabe</title>
 
-<style>
-  body {
-    font-family: Georgia, serif;
-    margin: 20px;
-  }
+  <!-- Zentrales Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css?v=2">
 
-  #output {
-    border: 1px solid #ccc;
-    padding: 20px;
-  }
-</style>
+  <script>
+    // Holt einen Parameter aus der URL, z.B. ?doc=tei/ft-139.xml
+    function getParameterByName(name) {
+      const url = window.location.href;
+      name = name.replace(/[\[\]]/g, "\\$&");
+      const regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)");
+      const results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return "";
+      return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
 
-<script>
-// Holt einen Parameter aus der URL, z.B. ?doc=tei/ft-139.xml
-function getParameterByName(name) {
-    const url = window.location.href;
-    name = name.replace(/[\[\]]/g, "\\$&");
-    const regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)");
-    const results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return "";
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
-
-async function loadAndTransform() {
-
-    const teiFile = getParameterByName("doc");
-    if (!teiFile) {
+    async function loadAndTransform() {
+      const teiFile = getParameterByName("doc");
+      if (!teiFile) {
         document.getElementById("output").innerHTML =
           "<p><b>Fehler:</b> Kein TEI-Dokument über ?doc= angegeben.</p>";
         return;
+      }
+
+      // XSL laden (mit Cache-Breaker)
+      const xslResponse = await fetch("xslt/tei2html.xsl?v=2");
+      const xslText = await xslResponse.text();
+      const parser = new DOMParser();
+      const xsl = parser.parseFromString(xslText, "text/xml");
+
+      // TEI laden
+      const teiResponse = await fetch(teiFile);
+      const teiText = await teiResponse.text();
+      const tei = parser.parseFromString(teiText, "text/xml");
+
+      // Transformation im Browser
+      const xsltProcessor = new XSLTProcessor();
+      xsltProcessor.importStylesheet(xsl);
+      const result = xsltProcessor.transformToFragment(tei, document);
+
+      const out = document.getElementById("output");
+      out.innerHTML = "";
+      out.appendChild(result);
+
+      // Standardansicht: Lesefassung
+      showView("reading");
     }
 
-    // XSL laden (mit Cache-Breaker)
-    const xslResponse = await fetch("xslt/tei2html.xsl?v=2");
-    const xslText = await xslResponse.text();
-    const parser = new DOMParser();
-    const xsl = parser.parseFromString(xslText, "text/xml");
+    function showView(mode) {
+      const crit = document.querySelector("#output #critical-view");
+      const read = document.querySelector("#output #reading-view");
+      const meta = document.querySelector("#output #meta-view");
 
-    // TEI laden
-    const teiResponse = await fetch(teiFile);
-    const teiText = await teiResponse.text();
-    const tei = parser.parseFromString(teiText, "text/xml");
+      if (!crit || !read) return;
 
-    // Transformation im Browser
-    const xsltProcessor = new XSLTProcessor();
-    xsltProcessor.importStylesheet(xsl);
-    const result = xsltProcessor.transformToFragment(tei, document);
-
-    const out = document.getElementById("output");
-    out.innerHTML = "";
-    out.appendChild(result);
-
-    // Standardansicht: Lesefassung
-    showView("reading");
-}
-
-function showView(mode) {
-    const crit = document.querySelector("#output #critical-view");
-    const read = document.querySelector("#output #reading-view");
-    if (!crit || !read) return;
-
-    if (mode === "critical") {
+      if (mode === "critical") {
         crit.style.display = "block";
         read.style.display = "none";
-    } else {
+        if (meta) meta.style.display = "none";
+      } else if (mode === "reading") {
         crit.style.display = "none";
         read.style.display = "block";
+        if (meta) meta.style.display = "none";
+      } else if (mode === "meta") {
+        crit.style.display = "none";
+        read.style.display = "none";
+        if (meta) meta.style.display = "block";
+      }
     }
-}
 
-window.onload = loadAndTransform;
-</script>
-
+    window.onload = loadAndTransform;
+  </script>
 </head>
 
 <body>
+  <h1>Digitale Arbeitskladde – Saarbrückener Ausgabe (Berlin, Saarbrücken 2025)</h1>
+  <p>Eine CoBot-Edition, hg. von Tobias Kraft in Zusammenarbeit mit ChatGPT 5.1 Thinking</p>
 
-<h1>Digitale Arbeitskladde – Saarbrückener Ausgabe (Berlin, Saarbrücken 2025)</h1>
-  <p>Eine CoBot-Edition, hg. von Tobias Kraft in Zusammenarbeit mit ChatGPT 5.1</p>
-
-<div id="output">
-    <!-- Ergebnis erscheint hier -->
-</div>
-
+  <div id="output">
+    <!-- Ergebnis der XSLT-Transformation erscheint hier -->
+  </div>
 </body>
 </html>
-

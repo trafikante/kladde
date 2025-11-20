@@ -10,6 +10,13 @@ h1 {
   margin-bottom: 1rem;
 }
 
+/* Container für das Transformations-Ergebnis */
+#output {
+  border: 1px solid #ccc;
+  padding: 1.25rem;
+  margin-top: 1rem;
+}
+
 /* Container für Bild + Text */
 .page-container {
   display: flex;
@@ -36,6 +43,20 @@ h1 {
 /* Textspalte */
 .text-column {
   font-size: 1rem;
+}
+
+/* Umschalt-Buttons für die Ansichten */
+.view-toggle {
+  margin-bottom: 1rem;
+}
+
+.view-toggle button {
+  margin-right: 0.5rem;
+}
+
+/* einzelne Text-Views */
+.text-view {
+  /* nur als logischer Block; Sichtbarkeit wird per JS gesteuert */
 }
 
 /* Datumszeile */
@@ -68,14 +89,7 @@ h1 {
   color: #444;
 }
 
-/* Responsiv: auf sehr kleinen Screens einspaltig */
-@media (max-width: 768px) {
-  .page-container {
-    flex-direction: column;
-  }
-}
-
-
+/* Block für Fußnoten / Kommentar */
 .footnotes-block {
   margin-top: 1.5rem;
   border: 1px solid #ddd;
@@ -91,3 +105,31 @@ h1 {
   margin-bottom: 0.5rem;
 }
 
+/* Entitäten-Legende unten auf der Seite */
+.entity-legend {
+  margin-top: 2rem;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  background: #fafafa;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+.entity-legend h2 {
+  margin-top: 0;
+}
+
+.legend-section {
+  margin-bottom: 1rem;
+}
+
+.legend-section h3 {
+  margin-bottom: 0.25rem;
+}
+
+/* Responsiv: auf sehr kleinen Screens einspaltig */
+@media (max-width: 768px) {
+  .page-container {
+    flex-direction: column;
+  }
+}

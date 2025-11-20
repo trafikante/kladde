@@ -8,54 +8,46 @@
   <xsl:output method="html" indent="yes" encoding="UTF-8"/>
 
   <!-- ========================================================= -->
-  <!--                     ROOT: HTML-GERÜST                      -->
+  <!--                     ROOT: HTML-FRAGMENT                   -->
   <!-- ========================================================= -->
 
   <xsl:template match="/tei:TEI">
-    <html lang="de">
-      <head>
-        <meta charset="UTF-8"/>
-        <title>
-          <xsl:value-of select="//tei:titleStmt/tei:title"/>
-        </title>
-        <!-- CSS im Root-Pfad des Repos -->
-        <link rel="stylesheet" href="css/styles.css?v=2"/>
-      </head>
-      <body>
+    <div class="tei-document">
 
-        <h1>
-          <xsl:value-of select="//tei:titleStmt/tei:title"/>
-        </h1>
+      <!-- Titel aus dem Header -->
+      <h1>
+        <xsl:value-of select="//tei:titleStmt/tei:title"/>
+      </h1>
 
-        <div class="page-container">
+      <div class="page-container">
 
-          <!-- LINKE SPALTE: Manuskriptbild -->
-          <div class="image-column">
-            <img>
-              <xsl:attribute name="src">
-                <!-- Dateiname aus <recordHist>/<source> hinter dem Doppelpunkt -->
-                <xsl:value-of select="concat('images/', normalize-space(substring-after(//tei:recordHist/tei:source, ': ')))"/>
-              </xsl:attribute>
-              <xsl:attribute name="alt">
-                <xsl:text>Manuskriptseite</xsl:text>
-              </xsl:attribute>
-            </img>
+        <!-- LINKE SPALTE: Manuskriptbild -->
+        <div class="image-column">
+          <img>
+            <xsl:attribute name="src">
+              <!-- Dateiname aus <recordHist>/<source> hinter dem Doppelpunkt -->
+              <xsl:value-of select="concat('images/', normalize-space(substring-after(//tei:recordHist/tei:source, ': ')))"/>
+            </xsl:attribute>
+            <xsl:attribute name="alt">
+              <xsl:text>Manuskriptseite</xsl:text>
+            </xsl:attribute>
+          </img>
+        </div>
+
+        <!-- RECHTE SPALTE: Text mit View-Toggle -->
+        <div class="text-column">
+
+          <div class="view-toggle">
+            <button type="button" onclick="showView('critical')">kritischer Text</button>
+            <button type="button" onclick="showView('reading')">Lesefassung</button>
+            <button type="button" onclick="showView('meta')">Metadaten</button>
           </div>
 
-          <!-- RECHTE SPALTE: Text mit View-Toggle -->
-          <div class="text-column">
+          <!-- Kritische Ansicht: Abkürzungen + Zeilenumbrüche + Fußnoten -->
+          <div id="critical-view" class="text-view">
+            <xsl:apply-templates select="//tei:body" mode="crit"/>
 
-            <div class="view-toggle">
-              <button type="button" onclick="showView('critical')">kritischer Text</button>
-              <button type="button" onclick="showView('reading')">Lesefassung</button>
-              <button type="button" onclick="showView('meta')">Metadaten</button>
-            </div>
-
-            <!-- Kritische Ansicht: Abkürzungen + Zeilenumbrüche + Fußnoten -->
-            <div id="critical-view" class="text-view">
-              <xsl:apply-templates select="//tei:body" mode="crit"/>
-
-              <!-- Fußnotenblock -->
+            <!-- Fußnotenblock -->
             <div class="footnotes-block">
               <h2>Kommentar</h2>
               <ol>
@@ -66,94 +58,126 @@
                 </xsl:for-each>
               </ol>
             </div>
-
-
-            <!-- Lesefassung: nur expan, Zeilenumbrüche aufgelöst -->
-            <div id="reading-view" class="text-view">
-              <xsl:apply-templates select="//tei:body" mode="read"/>
-            </div>
-
           </div>
-        </div>
 
-        
+          <!-- Lesefassung: nur expan, Zeilenumbrüche aufgelöst -->
+          <div id="reading-view" class="text-view" style="display:none;">
+            <xsl:apply-templates select="//tei:body" mode="read"/>
+          </div>
 
-        <!-- Entitäten-Legende -->
-        <div class="entity-legend">
-          <h2>Entitäten</h2>
+          <!-- Metadaten-Ansicht: einfache Anzeige aus dem Header -->
+          <div id="meta-view" class="text-view" style="display:none;">
+            <h2>Metadaten</h2>
 
-          <!-- Personen -->
-          <xsl:if test="//tei:listPerson/tei:person">
-            <div class="legend-section">
-              <h3>Personen</h3>
-              <ul>
-                <xsl:for-each select="//tei:listPerson/tei:person">
-                  <li>
-                    <span class="person">
-                      <xsl:value-of select="tei:persName"/>
-                    </span>
-                    <xsl:if test="@ref">
-                      <xsl:text> – </xsl:text>
-                      <a href="{@ref}">
-                        <xsl:value-of select="@ref"/>
-                      </a>
-                    </xsl:if>
-                  </li>
-                </xsl:for-each>
-              </ul>
-            </div>
-          </xsl:if>
+            <p>
+              <strong>Titel der Kladde:</strong>
+              <xsl:text> </xsl:text>
+              <xsl:value-of select="//tei:titleStmt/tei:title"/>
+            </p>
 
-          <!-- Orte -->
-          <xsl:if test="//tei:listPlace/tei:place">
-            <div class="legend-section">
-              <h3>Orte</h3>
-              <ul>
-                <xsl:for-each select="//tei:listPlace/tei:place">
-                  <li>
-                    <span class="place">
-                      <xsl:value-of select="tei:placeName"/>
-                    </span>
-                    <xsl:if test="@ref">
-                      <xsl:text> – </xsl:text>
-                      <a href="{@ref}">
-                        <xsl:value-of select="@ref"/>
-                      </a>
-                    </xsl:if>
-                  </li>
-                </xsl:for-each>
-              </ul>
-            </div>
-          </xsl:if>
+            <p>
+              <strong>Aufbewahrung:</strong>
+              <xsl:text> </xsl:text>
+              <xsl:value-of select="//tei:msDesc/tei:msIdentifier/tei:repository"/>
+            </p>
 
-          <!-- Ereignisse -->
-          <xsl:if test="//tei:listEvent/tei:event">
-            <div class="legend-section">
-              <h3>Ereignisse</h3>
-              <ul>
-                <xsl:for-each select="//tei:listEvent/tei:event">
-                  <li>
-                    <span class="event">
-                      <xsl:value-of select="tei:title"/>
-                    </span>
-                    <xsl:if test="tei:idno[@type='url']">
-                      <xsl:text> – </xsl:text>
-                      <a href="{tei:idno[@type='url']}">Webseite</a>
-                    </xsl:if>
-                  </li>
-                </xsl:for-each>
-              </ul>
-            </div>
-          </xsl:if>
+            <p>
+              <strong>Signatur / ID:</strong>
+              <xsl:text> </xsl:text>
+              <xsl:value-of select="//tei:msDesc/tei:msIdentifier/tei:idno"/>
+            </p>
+
+            <p>
+              <strong>Umfang:</strong>
+              <xsl:text> </xsl:text>
+              <xsl:value-of select="//tei:msDesc//tei:extent"/>
+            </p>
+
+            <p>
+              <strong>Entstehungszeitraum:</strong>
+              <xsl:text> </xsl:text>
+              <xsl:value-of select="//tei:msDesc//tei:origin/tei:origDate"/>
+            </p>
+          </div>
 
         </div>
+      </div>
 
-      </body>
-    </html>
+      <!-- Entitäten-Legende -->
+      <div class="entity-legend">
+        <h2>Entitäten</h2>
+
+        <!-- Personen -->
+        <xsl:if test="//tei:listPerson/tei:person">
+          <div class="legend-section">
+            <h3>Personen</h3>
+            <ul>
+              <xsl:for-each select="//tei:listPerson/tei:person">
+                <li>
+                  <span class="person">
+                    <xsl:value-of select="tei:persName"/>
+                  </span>
+                  <xsl:if test="@ref">
+                    <xsl:text> – </xsl:text>
+                    <a href="{@ref}">
+                      <xsl:value-of select="@ref"/>
+                    </a>
+                  </xsl:if>
+                </li>
+              </xsl:for-each>
+            </ul>
+          </div>
+        </xsl:if>
+
+        <!-- Orte -->
+        <xsl:if test="//tei:listPlace/tei:place">
+          <div class="legend-section">
+            <h3>Orte</h3>
+            <ul>
+              <xsl:for-each select="//tei:listPlace/tei:place">
+                <li>
+                  <span class="place">
+                    <xsl:value-of select="tei:placeName"/>
+                  </span>
+                  <xsl:if test="@ref">
+                    <xsl:text> – </xsl:text>
+                    <a href="{@ref}">
+                      <xsl:value-of select="@ref"/>
+                    </a>
+                  </xsl:if>
+                </li>
+              </xsl:for-each>
+            </ul>
+          </div>
+        </xsl:if>
+
+        <!-- Ereignisse -->
+        <xsl:if test="//tei:listEvent/tei:event">
+          <div class="legend-section">
+            <h3>Ereignisse</h3>
+            <ul>
+              <xsl:for-each select="//tei:listEvent/tei:event">
+                <li>
+                  <span class="event">
+                    <xsl:value-of select="tei:title"/>
+                  </span>
+                  <xsl:if test="tei:idno[@type='url']">
+                    <xsl:text> – </xsl:text>
+                    <a href="{tei:idno[@type='url']}">Webseite</a>
+                  </xsl:if>
+                </li>
+              </xsl:for-each>
+            </ul>
+          </div>
+        </xsl:if>
+
+      </div>
+
+    </div>
   </xsl:template>
 
   <!-- ========================================================= -->
-  <!--              MODUS: KRITISCHER TEXT (mode="crit")          -->
+  <!--              MODUS: KRITISCHER TEXT (mode="crit")         -->
   <!-- ========================================================= -->
 
   <xsl:template match="tei:body" mode="crit">
@@ -339,43 +363,43 @@
   <!--           MODUS: FUSSNOTENINHALT (mode="foot")            -->
   <!-- ========================================================= -->
 
-<xsl:template match="text()[contains(., 'http')]" mode="foot">
-  <xsl:variable name="t" select="."/>
-  <xsl:variable name="before" select="substring-before($t, 'http')"/>
-  <xsl:variable name="urlAndAfter" select="substring-after($t, 'http')"/>
+  <!-- Erkennung und Verlinkung von http-URLs im Fußnotentext -->
+  <xsl:template match="text()[contains(., 'http')]" mode="foot">
+    <xsl:variable name="t" select="."/>
+    <xsl:variable name="before" select="substring-before($t, 'http')"/>
+    <xsl:variable name="urlAndAfter" select="substring-after($t, 'http')"/>
 
-  <!-- URL bis zum nächsten Leerzeichen oder bis zum Ende -->
-  <xsl:variable name="urlCore">
-    <xsl:choose>
-      <xsl:when test="contains($urlAndAfter, ' ')">
-        <xsl:value-of select="concat('http', substring-before($urlAndAfter, ' '))"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="concat('http', $urlAndAfter)"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:variable>
+    <!-- URL bis zum nächsten Leerzeichen oder bis zum Ende -->
+    <xsl:variable name="urlCore">
+      <xsl:choose>
+        <xsl:when test="contains($urlAndAfter, ' ')">
+          <xsl:value-of select="concat('http', substring-before($urlAndAfter, ' '))"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="concat('http', $urlAndAfter)"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
 
-  <xsl:variable name="after">
-    <xsl:choose>
-      <xsl:when test="contains($urlAndAfter, ' ')">
-        <xsl:value-of select="substring-after($urlAndAfter, ' ')"/>
-      </xsl:when>
-      <xsl:otherwise/>
-    </xsl:choose>
-  </xsl:variable>
+    <xsl:variable name="after">
+      <xsl:choose>
+        <xsl:when test="contains($urlAndAfter, ' ')">
+          <xsl:value-of select="substring-after($urlAndAfter, ' ')"/>
+        </xsl:when>
+        <xsl:otherwise/>
+      </xsl:choose>
+    </xsl:variable>
 
-  <xsl:value-of select="$before"/>
-  <a href="{$urlCore}">
-    <xsl:value-of select="$urlCore"/>
-  </a>
-  <xsl:value-of select="$after"/>
-</xsl:template>
+    <xsl:value-of select="$before"/>
+    <a href="{$urlCore}">
+      <xsl:value-of select="$urlCore"/>
+    </a>
+    <xsl:value-of select="$after"/>
+  </xsl:template>
 
-<!-- danach das generische text()-Template -->
-<xsl:template match="text()" mode="foot">
-  <xsl:value-of select="."/>
-</xsl:template>
-
+  <!-- generischer Text-Knoten in Fußnoten -->
+  <xsl:template match="text()" mode="foot">
+    <xsl:value-of select="."/>
+  </xsl:template>
 
 </xsl:stylesheet>
