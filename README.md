@@ -10,7 +10,9 @@ Ediert wird **eine einzelne Manuskriptseite** aus der Arbeitskladde *„Future T
 - Erstellung eines Stellenkommentars  
 
 Die Ausgabe wird als einfache Edition mit Text- und Bildansicht präsentiert und ist über **GitHub Pages** verfügbar:  
-**https://trafikante.github.io/kladde/viewer.html?doc=tei/ft-139.xml**
+
+- Startseite **https://trafikante.github.io/kladde/**
+- Edition **https://trafikante.github.io/kladde/viewer.html?doc=tei/ft-139.xml**
 
 Alle Daten und der Code stehen **unter CC-0** zur freien Nutzung bereit.
 
@@ -36,8 +38,10 @@ The edition covers **a single manuscript page** from the working notebook *“Fu
 - structural and semantic markup with medium granularity (including entities and authority-ID research)  
 - commentary on selected passages  
 
-The edition is presented as a simple text-and-image viewer and is available via **GitHub Pages**:  
-**https://trafikante.github.io/kladde/viewer.html?doc=tei/ft-139.xml**
+The edition is presented as a simple text-and-image viewer and is available via **GitHub Pages**:
+
+- Landing Page **https://trafikante.github.io/kladde/**
+- Edition **https://trafikante.github.io/kladde/viewer.html?doc=tei/ft-139.xml**
 
 All data and code are released under **CC-0** for unrestricted reuse.
 
