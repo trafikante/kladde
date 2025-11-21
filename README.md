@@ -9,7 +9,7 @@ Ediert wird **eine einzelne Manuskriptseite** aus der Arbeitskladde *„Future T
 - strukturelle und semantische Auszeichnung mit mittlerer Granularität (inkl. Entitäten und Normdaten-ID-Recherche)  
 - Erstellung eines Stellenkommentars  
 
-Die Ausgabe wird als einfache Edition mit Text- und Bildansicht präsentiert und ist über **GitHub Pages** verfügbar:  
+Die Ausgabe wird als statische Edition mit Text- und Bildansicht präsentiert und ist über **GitHub Pages** verfügbar:  
 
 - Startseite **https://trafikante.github.io/kladde/**
 - Edition **https://trafikante.github.io/kladde/viewer.html?doc=tei/ft-139.xml**
