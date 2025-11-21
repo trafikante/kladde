@@ -33,7 +33,7 @@ _Eine CoBot-Edition, hg. von Tobias Kraft in Zusammenarbeit mit ChatGPT 5.1 Thin
 
 ## XML-Quelle
 
-🔗 [Ansicht/Download der TEI-XML-Datei (ft-139.xml)](https://github.com/trafikante/kladde/blob/main/tei/ft-139.xml)
+🔗 [Download der TEI-XML-Datei (ft-139.xml)](https://github.com/trafikante/kladde/blob/main/tei/ft-139.xml)
 
 ---
 
@@ -45,7 +45,7 @@ _Eine CoBot-Edition, hg. von Tobias Kraft in Zusammenarbeit mit ChatGPT 5.1 Thin
 
 ## Vollständiger Chat-Verlauf 
 
-🔗 [(Projektordner „25 Saarbrücken“ (Zugriff auf Anfrage)](https://chatgpt.com/g/g-p-691d77cf89d481919e25d3968974726e-25-saarbrucken/project)
+🔗 [Projektordner „25 Saarbrücken“ (Zugriff auf Anfrage)](https://chatgpt.com/g/g-p-691d77cf89d481919e25d3968974726e-25-saarbrucken/project)
 
 
 
