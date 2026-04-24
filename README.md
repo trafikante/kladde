@@ -58,4 +58,4 @@ All data and code are released under **CC-0** for unrestricted reuse.
 
 ### Zitierhinweis / How to cite
 
-Kraft, Tobias; ChatGPT (v. 5.1) (OpenAI) (2025): *Beispiel-Edition „Future Texts“ – KI-gestützter Workflow*. GitHub Repository. Verfügbar unter: https://trafikante.github.io/kladde/viewer.html?doc=tei/ft-139.xml (Zugriff: [Datum]).
+Kraft, Tobias; ChatGPT (v. 5.1) (OpenAI) (2025): *Beispiel-Edition „Future Texts“ – KI-gestützter Workflow*. GitHub Repository. Verfügbar unter: [https://trafikante.github.io/kladde/](https://trafikante.github.io/kladde/) (Zugriff: [Datum]).
